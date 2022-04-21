@@ -1,0 +1,62 @@
+//Kruskal Algorithem
+var V = 5;
+var Parent = Array(V).fill(0);
+var Inf = 10000;
+function find(i)
+{
+    while (Parent[i] != i)
+        i = Parent[i];
+    return i;
+}
+function union1(i, j)
+{
+    var a = find(i);
+    var b = find(j);
+    Parent[a] = b;
+}
+
+function Kruskal(cost)
+{
+    var mincost = 0; 
+    for (var i = 0; i < V; i++)
+        Parent[i] = i;
+    var edge_count = 0;
+    while (edge_count < V - 1)
+    {
+        var min = Inf, a = -1, b = -1;
+        for (var i = 0; i < V; i++)
+        {
+            for (var j = 0; j < V; j++)
+            {
+                if (find(i) != find(j) && cost[i][j] < min)
+                {
+                    min = cost[i][j];
+                    a = i;
+                    b = j;
+                }
+            }
+        }
+        console.log("Here the elements"); 
+        union1(a, b);
+        console.log(`Edge ${edge_count++}:(${a},${b}) cost:${min}`);
+        mincost += min;
+    }
+    console.log(` Minimum cost= ${mincost}`);
+}
+var cost = [
+    [Inf, 2, Inf, 6, Inf],
+    [2, Inf, 3, 8, 5],
+    [Inf, 3, Inf, Inf, 7],
+    [6, 8, Inf, Inf, 9],
+    [Inf, 5, 7, 9, Inf]];
+Kruskal(cost);
+//Output-
+//Here the elements
+//Edge 0:(0,1) cost:2
+//Here the elements
+//Edge 1:(1,2) cost:3
+//Here the elements
+//Edge 2:(1,4) cost:5
+//Here the elements
+//Edge 3:(0,3) cost:6
+// Minimum cost= 16
